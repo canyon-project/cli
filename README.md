@@ -1,23 +1,7 @@
-# Rslib project
-
-## Setup
-
-Install the dependencies:
-
-```bash
-pnpm install
-```
-
-## Get started
-
-Build the library:
-
-```bash
-pnpm build
-```
-
-Build the library in watch mode:
-
-```bash
-pnpm dev
+```mermaid
+graph TD
+    A[开始] --> B{判断}
+    B -->|是| C[执行操作]
+    B -->|否| D[结束]
+    C --> D
 ```
