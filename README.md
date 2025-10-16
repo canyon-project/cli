@@ -1,7 +1,4 @@
-```mermaid
-graph TD
-    A[开始] --> B{判断}
-    B -->|是| C[执行操作]
-    B -->|否| D[结束]
-    C --> D
-```
+代办项
+
+upload
+- [x] 对于init json，先尝试找input SourceMap
