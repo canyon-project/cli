@@ -39,9 +39,17 @@ program
 /**
  * * CLI Commands with upload
  */
+// upload --dsn=http://canyon1010.fws.qa.nt.ctripcorp.com/coverage/client --repo_id=$CI_PROJECT_ID --instrument_cwd=$CI_PROJECT_DIR --sha=$CI_COMMIT_SHA --branch=$CI_COMMIT_REF_NAME --provider=gitlab
 program
     .command("upload")
     .option("--dsn <dsn>", "dsn of the canyon server")
+    .option("--repo_id <repo_id>", "repo id of the canyon server")
+    .option("--instrument_cwd <instrument_cwd>", "instrument cwd of the canyon server")
+    .option("--sha <sha>", "sha of the canyon server")
+    .option("--branch <branch>", "branch of the canyon server")
+    .option("--provider <provider>", "provider of the canyon server")
+    .option("--build_target <build_target>", "build target of the canyon server")
+    .option("--coverage <coverage>", "coverage of the canyon server")
     .allowExcessArguments(false)
     .allowUnknownOption(false)
     .description("modify react native project code to adapt to canyon")
