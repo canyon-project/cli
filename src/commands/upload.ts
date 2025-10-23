@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import axios from 'axios';
+import * as console from "node:console";
 
 export async function mapCommand(params: any, options: any) {
   const { dsn, repo_id: repoID, commit_sha: sha, provider,build_target } = params;
@@ -25,7 +26,7 @@ export async function mapCommand(params: any, options: any) {
         );
 
         Object.entries(fileCoverage).forEach((item:any)=>{
-          item[1].inputSourceMap = pathString
+          item[1].inputSourceMap = JSON.parse(pathString)
         })
       } catch (e) {
       }
