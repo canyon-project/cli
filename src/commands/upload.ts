@@ -49,9 +49,16 @@ export async function mapCommand(params: any, options: any) {
     buildTarget: build_target||'',
     coverage: Object.keys(data),
   };
+  console.log(p)
   await axios.post(dsn, {
     ...p,
     // 覆盖p中的coverage
     coverage: data,
+  }).then(r=>{
+    console.log(r)
+    return r
+  }).catch(err=>{
+    console.log(err)
+    return err
   });
 }
