@@ -1,9 +1,9 @@
-import * as console from 'node:console';
 import fs from 'node:fs';
 import path from 'node:path';
 import axios from 'axios';
+
 export async function mapCommand(params: any, options: any) {
-  const { dsn, repo_id: repoID, commit_sha: sha, provider } = params;
+  const { dsn, repo_id: repoID, commit_sha: sha, provider,build_target } = params;
   if (!fs.existsSync(path.resolve(process.cwd(), '.canyon_output'))) {
     console.log('不存在');
     return;
@@ -15,9 +15,25 @@ export async function mapCommand(params: any, options: any) {
       path.resolve(process.cwd(), '.canyon_output', files[i]),
       'utf-8',
     );
+    const fileCoverage = JSON.parse(fileCoverageString)
+
+    if (files[i].includes('-init-')) {
+      try {
+        const pathString = fs.readFileSync(
+            path.resolve(Object.keys(fileCoverage)[0]+'.map'),
+            'utf-8',
+        );
+
+        Object.entries(fileCoverage).forEach((item:any)=>{
+          item[1].inputSourceMap = pathString
+        })
+      } catch (e) {
+      }
+    }
+
     data = {
       ...data,
-      ...JSON.parse(fileCoverageString),
+      ...fileCoverage,
     };
   }
 
@@ -29,12 +45,12 @@ export async function mapCommand(params: any, options: any) {
     instrumentCwd: process.cwd(),
     reportID: 'initial_coverage_data',
     reportProvider: 'ci',
-    buildTarget: '',
+    buildTarget: build_target||'',
     coverage: Object.keys(data),
   };
-  console.log(p);
   await axios.post(dsn, {
     ...p,
+    // 覆盖p中的coverage
     coverage: data,
   });
 }
