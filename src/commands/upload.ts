@@ -57,6 +57,9 @@ export async function mapCommand(params: any, options: any) {
   }).then(r=>{
     return r
   }).catch(err=>{
+    if (err.response){
+      console.log(err.response)
+    }
     return err
   });
 }
