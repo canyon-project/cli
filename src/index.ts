@@ -39,7 +39,7 @@ program
 /**
  * * CLI Commands with upload
  */
-// upload --dsn=http://canyon1010.fws.qa.nt.ctripcorp.com/coverage/client --repo_id=$CI_PROJECT_ID --instrument_cwd=$CI_PROJECT_DIR --sha=$CI_COMMIT_SHA --branch=$CI_COMMIT_REF_NAME --provider=gitlab
+// upload --dsn=http://local/coverage/client --repo_id=$CI_PROJECT_ID --instrument_cwd=$CI_PROJECT_DIR --sha=$CI_COMMIT_SHA --branch=$CI_COMMIT_REF_NAME --provider=gitlab
 program
   .command('upload')
   .option('--dsn <dsn>', 'dsn of the canyon server')

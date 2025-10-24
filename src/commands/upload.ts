@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as console from "node:console";
 
 export async function mapCommand(params: any, options: any) {
-  const { dsn, repo_id: repoID, commit_sha: sha, provider,build_target } = params;
+  const { dsn, repo_id: repoID, sha: sha, provider,build_target } = params;
   if (!fs.existsSync(path.resolve(process.cwd(), '.canyon_output'))) {
     console.log('不存在');
     return;
@@ -55,10 +55,8 @@ export async function mapCommand(params: any, options: any) {
     // 覆盖p中的coverage
     coverage: data,
   }).then(r=>{
-    console.log(r)
     return r
   }).catch(err=>{
-    console.log(err)
     return err
   });
 }
