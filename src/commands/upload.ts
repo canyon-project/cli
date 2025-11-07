@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as console from "node:console";
 
 export async function mapCommand(params: any, options: any) {
-  const { dsn, repo_id: repoID, sha: sha, provider,build_target } = params;
+  const { dsn, repo_id: repoID, sha: sha, provider,build_target,debug } = params;
   if (!fs.existsSync(path.resolve(process.cwd(), '.canyon_output'))) {
     console.log('不存在');
     return;
@@ -27,11 +27,18 @@ export async function mapCommand(params: any, options: any) {
 
         Object.entries(fileCoverage).forEach((item:any)=>{
           item[1].inputSourceMap = JSON.parse(pathString)
+          if (debug==='true'){
+            console.log(`${item[1].path}有inputSourceMap`)
+          }
         })
+
       } catch (e) {
+        if (debug==='true'){
+          console.log(e)
+        }
       }
     }
-
+    // console.log(data)
     data = {
       ...data,
       ...fileCoverage,
@@ -49,7 +56,9 @@ export async function mapCommand(params: any, options: any) {
     buildTarget: build_target||'',
     coverage: Object.keys(data),
   };
-  console.log(p)
+  if (debug ==='true'){
+    console.log(p)
+  }
   await axios.post(dsn, {
     ...p,
     // 覆盖p中的coverage
