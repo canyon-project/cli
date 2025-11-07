@@ -18,27 +18,6 @@ export async function mapCommand(params: any, options: any) {
     );
     const fileCoverage = JSON.parse(fileCoverageString)
 
-    if (files[i].includes('-init-')) {
-      try {
-        const pathString = fs.readFileSync(
-            path.resolve(Object.keys(fileCoverage)[0]+'.map'),
-            'utf-8',
-        );
-
-        Object.entries(fileCoverage).forEach((item:any)=>{
-          item[1].inputSourceMap = JSON.parse(pathString)
-          if (debug==='true'){
-            console.log(`${item[1].path}有inputSourceMap`)
-          }
-        })
-
-      } catch (e) {
-        if (debug==='true'){
-          console.log(e)
-        }
-      }
-    }
-    // console.log(data)
     data = {
       ...data,
       ...fileCoverage,
