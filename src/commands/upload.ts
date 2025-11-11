@@ -4,7 +4,7 @@ import axios from 'axios';
 import * as console from "node:console";
 
 export async function mapCommand(params: any, options: any) {
-  const { dsn, repo_id: repoID, sha: sha, provider,build_target,debug } = params;
+  const { dsn, repo_id: repoID, sha: sha, provider,build_target,debug,instrument_cwd } = params;
   if (!fs.existsSync(path.resolve(process.cwd(), '.canyon_output'))) {
     console.log('不存在');
     return;
@@ -29,7 +29,7 @@ export async function mapCommand(params: any, options: any) {
     provider: provider || 'gitlab',
     repoID: repoID || process.env.CI_PROJECT_ID,
     sha: sha || process.env.CI_COMMIT_SHA,
-    instrumentCwd: process.cwd(),
+    instrumentCwd: instrument_cwd||process.cwd(),
     reportID: 'initial_coverage_data',
     reportProvider: 'ci',
     buildTarget: build_target||'',
