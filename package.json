@@ -1,6 +1,6 @@
 {
   "name": "@canyonjs/cli",
-  "version": "1.0.12",
+  "version": "1.0.15",
   "type": "module",
   "exports": {
     ".": {

@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import axios from 'axios';
 import * as console from "node:console";
+import { mergeCoverageMaps } from '../utils/mergeCoverage';
 
 export async function mapCommand(params: any, options: any) {
   const { dsn, repo_id: repoID, sha: sha, provider,build_target,debug,instrument_cwd } = params;
@@ -10,7 +11,7 @@ export async function mapCommand(params: any, options: any) {
     return;
   }
   const files = fs.readdirSync(path.resolve(process.cwd(), '.canyon_output'));
-  let data = {};
+  let data: Record<string, any> = {};
   for (let i = 0; i < files.length; i++) {
     const fileCoverageString = fs.readFileSync(
       path.resolve(process.cwd(), '.canyon_output', files[i]),
@@ -18,10 +19,7 @@ export async function mapCommand(params: any, options: any) {
     );
     const fileCoverage = JSON.parse(fileCoverageString)
 
-    data = {
-      ...data,
-      ...fileCoverage,
-    };
+    data = mergeCoverageMaps(data, fileCoverage);
   }
 
   const p = {
